@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="container">
     <div id="myChart" style="width: 100%;height:800px;"></div>
   </div>
@@ -856,4 +856,4 @@ export default {
     margin: 0 auto;
 }
 </style>
-
+ -->

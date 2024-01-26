@@ -4,6 +4,7 @@ install:
 
 .PHONY: build
 build:
+	export NODE_OPTIONS=--openssl-legacy-provider
 	npm run build
 
 .PHONY: docker
@@ -16,4 +17,5 @@ push:
 
 .PHONY: run
 run:
+	export NODE_OPTIONS=--openssl-legacy-provider
 	npm run serve
