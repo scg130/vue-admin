@@ -6,10 +6,10 @@
                 <div class="box-card">
                     <div class="el-card mgb20 is-hover-shadow" style="height: 252px">
                         <div class="user-info">
-                            <img :src="users.avatar" alt="" class="avatar">
+                            <img :src="this.userInfo.avatar" alt="" class="avatar">
                             <div class="user-info-cont">
-                                <span class="user-name">{{users.name}}</span>
-                                <span>{{users.identity == 'manager' ? '管理员' : '普通员工'}}</span>
+                                <span class="user-name">{{this.userInfo.name}}</span>
+                                <span>{{this.userInfo.identity == 'manager' ? '管理员' : '普通员工'}}</span>
                             </div>
                         </div>
                         <div class="user-info-list">
@@ -139,14 +139,25 @@ export default {
                     status:false,
                     title:"2019要学会React"
                 }
-            ]
+            ],
+			userInfo:Object
         }
     },
-    computed:{
-        users() {
-          return this.$store.getters.user.Data.udata;
-        }
-    },
+    mounted() {
+		this.$axios.get(HOST+'/admin/api/info').then(res => {
+					if (res.status === 401) {
+						next("/login");
+						return
+					}
+					if (res.data.code == 0){
+						this.userInfo = {
+							name: res.data.data.username,
+							avatar: res.data.data.avatar,
+							identity:"manager",
+						}
+					}
+				})	
+	},
     components: {
         Clock
     }
