@@ -37,10 +37,10 @@
 							<i class="el-icon-rank"></i>
 						</el-tooltip>
 					</div>
-					<img class="avatar" :src="users.avatar">
+					<img class="avatar" :src="this.userInfo.avatar">
 					<div class="welcome">
 						<p class="name comename">欢迎</p>
-						<p class="name avatarname">{{users.name}}</p>
+						<p class="name avatarname">{{this.userInfo.name}}</p>
 					</div>
 					<span class='username'>
 						<el-dropdown trigger="click" @command='setDialogInfo'>
@@ -71,30 +71,22 @@ import theme from '../common/theme';
 				collapse: false, //菜单栏是否闭合
 				fullscreen: false,
 				showlrc:true,
+				userInfo:Object,
 			}
 		},
-		computed: {
-			users() { //通过vuex获取用户信息
-				if (this.$store.getters.user.Data != undefined) {
-					return this.$store.getters.user.Data.udata;
-				} else {
-					var info = {};
-					this.$axios.get(HOST+'/admin/api/info').then(res => {
-						if (res.status === 401) {
-							next("/login");
-							return
+		mounted() {
+			this.$axios.get(HOST+'/admin/api/info').then(res => {
+					if (res.status === 401) {
+						next("/login");
+						return
+					}
+					if (res.data.code == 0){
+						this.userInfo = {
+							name: res.data.data.username,
+							avatar: res.data.data.avatar,
 						}
-						if (res.data.code == 0){
-							info = {
-								name: res.data.data.username,
-								avatar: res.data.data.avatar,
-							}
-						}
-					})
-					return info;
-				}
-				
-			},
+					}
+				})
 		},
 		methods: {
 			setDialogInfo(cmditem) {
