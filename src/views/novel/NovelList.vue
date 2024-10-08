@@ -247,7 +247,7 @@ export default {
 	},
 	methods: {
 		initCates(){
-			this.$axios.post(HOST+'/novel/category/list',{"page":1,"page_size":9999}).then(res => {
+			this.$axios.post(HOST+'/novel/category/list',{"pagnation":{"page":1,"page_size":9999}}).then(res => {
 				    if (res.status === 401) {
 						next("/login");
 						return
