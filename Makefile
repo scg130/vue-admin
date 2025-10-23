@@ -9,7 +9,7 @@ build:
 
 .PHONY: docker
 docker: 
-	docker build . -t scg130/vue-admin:latest
+	docker build . --platform linux/amd64 -t scg130/vue-admin:latest
 
 .PHONY: push
 push: 
